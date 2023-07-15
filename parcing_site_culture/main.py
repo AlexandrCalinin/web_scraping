@@ -9,13 +9,13 @@ headers = {
                   "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
 }
 
-# for page_number in range(1, 109):
-#     url = "https://www.culture.ru/literature/poems/tag-o-lyubvi?page=" + str(page_number)
-#     req = requests.get(url=url, headers=headers)
-#     src = req.text
-#     with open(f"html/{page_number}.html", "w", encoding="utf-8") as file:
-#         file.write(src)
-#     print(f"{page_number} страница скопирована")
+for page_number in range(1, 109):
+    url = "https://www.culture.ru/literature/poems/tag-o-lyubvi?page=" + str(page_number)
+    req = requests.get(url=url, headers=headers)
+    src = req.text
+    with open(f"html/{page_number}.html", "w", encoding="utf-8") as file:
+        file.write(src)
+    print(f"{page_number} страница скопирована")
 
 result = dict()
 for index in range(1, 109):
@@ -31,4 +31,7 @@ for index in range(1, 109):
         result[item_text_string] = item_url
 
 with open("result.json", "w") as file:
-    json.dump(result, file, indent=4, ensure_ascii=False)
+    try:
+        json.dump(result, file, indent=4, ensure_ascii=False)
+    except UnicodeEncodeError:
+        pass
